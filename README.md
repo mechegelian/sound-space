@@ -52,6 +52,16 @@ The production preview is served under `/sound-space/` (normally `http://localho
 
 GitHub Pages publishes `dist` through `.github/workflows/deploy.yml` on pushes to `main`. In repository **Settings > Pages**, set **Source** to **GitHub Actions**. The workflow installs dependencies with `npm ci`, builds, and deploys using the official Pages actions. Vite uses `/sound-space/` for production while local development stays at `/`.
 
+Commit the `.github/workflows/deploy.yml` file and `scripts/verify-pages.mjs` along with the application and `package-lock.json`. File uploads that omit the hidden `.github` folder will not install the deployment workflow. Do not select **Deploy from a branch** or publish the repository root: its `index.html` is a Vite source entry that requires a build.
+
+The workflow runs tests and checks that `dist/index.html` references existing hashed assets under `/sound-space/assets/`, with no `src/main.jsx` reference, before uploading **only `dist`**. You can run the same check locally after building:
+
+```sh
+node scripts/verify-pages.mjs
+```
+
+After selecting **GitHub Actions**, push to `main` or open **Actions > Deploy SOUND SPACE to GitHub Pages > Run workflow**. Wait for that workflow to succeed before checking the public URL. Do not copy the generated HTML over the source `index.html`; local development needs the source entry.
+
 ## Author
 
 Designed & built by **Mehmet Copuroglu** · 2026

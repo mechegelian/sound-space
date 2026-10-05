@@ -1,0 +1,122 @@
+.audio-controls {
+  position: absolute;
+  bottom: max(1.5rem, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(760px, calc(100% - 5rem));
+  padding: 0;
+  color: #b9c5d1;
+}
+.audio-controls__input { display: none; }
+.audio-controls__header, .audio-controls__transport, .audio-controls__time-pair {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  gap: 1rem;
+}
+.audio-controls__header { min-height: 20px; }
+.audio-controls__filename {
+  overflow: hidden;
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  letter-spacing: 0.015em;
+}
+.audio-controls:not(.audio-controls--loaded) .audio-controls__filename { color: #717e8d; }
+.audio-controls__time-pair { flex-shrink: 0; gap: 0.5rem; }
+.audio-controls__time { font-size: 0.625rem; font-variant-numeric: tabular-nums; }
+.audio-controls__divider { color: #4c5c6f; font-size: 0.625rem; }
+.audio-controls__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 36px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #aabac8;
+  font: inherit;
+  font-size: 0.625rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: color 160ms ease, text-shadow 160ms ease;
+}
+.audio-controls__plus { font-size: 1rem; color: #79bed1; font-weight: 300; }
+.audio-controls__play { min-width: 68px; justify-content: flex-end; color: #b7d9e4; }
+.audio-controls__button:hover:not(:disabled) { color: #a1f5f0; text-shadow: 0 0 14px #51bdd955; }
+.audio-controls__button:disabled { opacity: 0.35; cursor: default; }
+.audio-controls__button:focus-visible, .audio-controls__seek:focus-visible {
+  outline: 1px solid #8fe0e6;
+  outline-offset: 4px;
+}
+.audio-controls__seek {
+  display: block;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 24px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.audio-controls__seek::-webkit-slider-runnable-track {
+  height: 1px;
+  background: linear-gradient(to right, #91d9e1 0% var(--progress), #ffffff24 var(--progress) 100%);
+}
+.audio-controls__seek::-moz-range-track { height: 1px; background: #ffffff24; }
+.audio-controls__seek::-moz-range-progress { height: 1px; background: #91d9e1; }
+.audio-controls__seek::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 6px;
+  height: 6px;
+  margin-top: -2.5px;
+  border-radius: 50%;
+  background: #b0f1eb;
+  box-shadow: 0 0 8px #75dce45a;
+}
+.audio-controls__seek::-moz-range-thumb {
+  width: 6px;
+  height: 6px;
+  border: 0;
+  border-radius: 50%;
+  background: #b0f1eb;
+}
+.audio-controls__seek:disabled { opacity: 0.3; }
+.audio-controls__empty-line { height: 1px; margin: 11.5px 0; background: #ffffff19; }
+.audio-controls__note {
+  margin: 0;
+  color: #c6a6d9;
+  font-size: 0.625rem;
+  line-height: 1.5;
+}
+.audio-controls__note:empty { display: none; }
+.audio-controls--loaded .audio-controls__time-pair,
+.audio-controls__seek, .audio-controls__play { animation: dock-reveal 250ms ease-out both; }
+@keyframes dock-reveal {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 600px) {
+  .audio-controls { width: calc(100% - 3rem); bottom: max(1.25rem, env(safe-area-inset-bottom)); }
+  .audio-controls__filename { font-size: 0.6875rem; }
+}
+@media (max-height: 500px) {
+  .audio-controls { bottom: max(0.5rem, env(safe-area-inset-bottom)); width: min(600px, calc(100% - 3rem)); }
+  .audio-controls__button { min-height: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .audio-controls__button { transition: none; }
+  .audio-controls--loaded .audio-controls__time-pair,
+  .audio-controls__seek, .audio-controls__play { animation: none; }
+}
+
+.audio-controls__button { min-height: 44px; font-size: 11px; }
+.audio-controls__seek { height: 32px; }
+.audio-controls__empty-line { margin: 15.5px 0; }
+.audio-controls__note { font-size: 12px; }
+.audio-controls__time { font-size: 11px; }
